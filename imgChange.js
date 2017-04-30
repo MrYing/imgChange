@@ -35,7 +35,7 @@ function imgChange(id,obj){//构造轮换函数
 			$("#img"+id).css(imgConCss);//轮换图容器样式 生效
 			
 			if(obj.imgBtn.is){//判断焦点轮换是否开启，若开启，执行以下操作
-				var imgBtnCon = "<div id='imgBtnCon'></div>";//初始化焦点容器
+				var imgBtnCon = "<div id='imgBtnCon"+id+"'></div>";//初始化焦点容器
 				$("#"+id).append(imgBtnCon);//添加焦点容器
 					var imgBtnConCss = {//初始化焦点容器样式
 						"width":obj.imgBtn.size*obj.imgUrl.length+obj.imgUrl.length*obj.imgBtn.interval+50+"px",
@@ -44,11 +44,11 @@ function imgChange(id,obj){//构造轮换函数
 						"left":obj.imgBtn.left,
 						"z-index":"100"
 					}
-				$("#imgBtnCon").css(imgBtnConCss);//焦点容器样式 生效
+				$("#imgBtnCon"+id).css(imgBtnConCss);//焦点容器样式 生效
 				var imgBtn = new Array();//初始化焦点
 				for (var i = 0;i<obj.imgUrl.length;i++) {//循环添加焦点
-					imgBtn[i] = "<div class='imgBtn imgBtn"+(i+1)+"'></div>";
-					$(imgBtn[i]).appendTo("#imgBtnCon");					
+					imgBtn[i] = "<div class='imgBtn"+id+" imgBtn"+id+(i+1)+"'></div>";
+					$(imgBtn[i]).appendTo("#imgBtnCon"+id);					
 				}
 					var btnCss = {//初始化焦点样式
 						"width":obj.imgBtn.size+"px",
@@ -58,10 +58,10 @@ function imgChange(id,obj){//构造轮换函数
 						"float":"left",
 						"marginLeft":obj.imgBtn.interval+"px"
 					}
-					$(".imgBtn").css(btnCss);//焦点样式 生效
-					$("#imgBtnCon>div:nth-child(1)").css("background",obj.imgBtn.color);//为第一个焦点初始化样式 
+					$(".imgBtn"+id).css(btnCss);//焦点样式 生效
+					$("#imgBtnCon"+id+">div:nth-child(1)").css("background",obj.imgBtn.color);//为第一个焦点初始化样式 
 					if(obj.imgBtn.type==="circular"){//判断焦点类型是否为圆
-						$(".imgBtn").css("border-radius","50%");
+						$(".imgBtn"+id).css("border-radius","50%");
 					}
 					
 				}
@@ -73,10 +73,10 @@ function imgChange(id,obj){//构造轮换函数
 
 			for (var i = 0;i < obj.imgUrl.length;i++) {//循环构造添加图片
 				if(obj.autoChange.type == "slideTop"&&obj.imgTips.is){	
-					newImg[i] = "<a href='"+obj.href[i]+"'><span class='imgTips' style='left:0;top:"+(obj.imgTips.top+i*obj.imgHeight)+"px'>"+obj.title[i]+"</span><img src='"+obj.imgUrl[i]+"' width='"+obj.imgWidth+"px' height='"+obj.imgHeight+"px' title='"+obj.title[i]+"'/></a>";
+					newImg[i] = "<a href='"+obj.href[i]+"'><span class='imgTips"+id+"' style='left:0;top:"+(obj.imgTips.top+i*obj.imgHeight)+"px'>"+obj.title[i]+"</span><img src='"+obj.imgUrl[i]+"' width='"+obj.imgWidth+"px' height='"+obj.imgHeight+"px' title='"+obj.title[i]+"'/></a>";
 				}else{
 					newImg[i] = obj.imgTips.is?
-						"<a href='"+obj.href[i]+"'><span class='imgTips' style='top:"+obj.imgTips.top+"+px'>"+obj.title[i]+"</span><img src='"+obj.imgUrl[i]+"' width='"+obj.imgWidth+"px' height='"+obj.imgHeight+"px' title='"+obj.title[i]+"'/></a>":
+						"<a href='"+obj.href[i]+"'><span class='imgTips"+id+"' style='top:"+obj.imgTips.top+"+px'>"+obj.title[i]+"</span><img src='"+obj.imgUrl[i]+"' width='"+obj.imgWidth+"px' height='"+obj.imgHeight+"px' title='"+obj.title[i]+"'/></a>":
 						"<a href='"+obj.href[i]+"'><img src='"+obj.imgUrl[i]+"' width='"+obj.imgWidth+"px' height='"+obj.imgHeight+"px' title='"+obj.title[i]+"'/></a>";
 					
 				}
@@ -97,7 +97,7 @@ function imgChange(id,obj){//构造轮换函数
 					"lineHeight":obj.imgTips.height+"px",					
 					"z-index":"99"
 				}
-				$(".imgTips").css(imgTipsStyle);
+				$(".imgTips"+id).css(imgTipsStyle);
 			}
 
 
@@ -114,9 +114,9 @@ function imgChange(id,obj){//构造轮换函数
 				}
 				$("#img"+id).animate(autoChange,obj.autoChange.keepTime*1000);//执行轮换
 
-				if(obj.autoChange.type == "slideTop" && obj.imgTips.is){$(".imgTips").animate(autoChange,obj.autoChange.keepTime*1000)};//执行轮换}
+				if(obj.autoChange.type == "slideTop" && obj.imgTips.is){$(".imgTips"+id).animate(autoChange,obj.autoChange.keepTime*1000)};//执行轮换}
 
-				$(".imgBtn").eq(slideCounts).css("background",obj.imgBtn.color).siblings().css("background","none");//绑定焦点轮换					
+				$(".imgBtn"+id).eq(slideCounts).css("background",obj.imgBtn.color).siblings().css("background","none");//绑定焦点轮换					
 			}
 			function setTimer(){//构造定时器
 				return setInterval(imgChaneStart,obj.autoChange.time*1000);
@@ -124,14 +124,14 @@ function imgChange(id,obj){//构造轮换函数
 			
 			if(obj.autoChange.isAuto){//判断是否开启自动轮换
 				var timer = setTimer();//开启自动轮换则调用定时器
-				$(".imgBtn").on("mouseout",function(){//绑点鼠标移出事件
+				$(".imgBtn"+id).on("mouseout",function(){//绑点鼠标移出事件
 					clearInterval(timer);//当鼠标移出焦点清除上次定时器
 					timer = setTimer();//开启新的定时器
 				})
 			}
 			
 			function mouseoverPic(idx){//构造鼠标悬停事件
-				$(".imgBtn"+idx).on("mouseover",function(){						
+				$(".imgBtn"+id+idx).on("mouseover",function(){						
 					slideCounts = idx-2;imgChaneStart();//当鼠标悬停在焦点上时让图片轮换到当前对应的焦点图片
 					if(obj.autoChange.isAuto){clearInterval(timer);}//若开启了自动轮换，则清除定时器，让图片停止轮换
 					})				
