@@ -2,21 +2,21 @@
  
 ## 使用方法
 
-1. 调用jquery和imgChang.js
+### 1. 调用jquery和imgChang.js
 ```html
 <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
 <script src="imgChange.js"></script>
 ```
-注 ：jquery版本必须为3.0或更高版本
+##### 注 ：jquery版本必须为3.0或更高版本
 
-2. 为轮换图创建容器DOM
+### 2. 为轮换图创建容器DOM
 ```html
  <div id="imgChange"></div> 
 ```
-3. 定义对象及配置变量
+### 3. 定义对象及配置变量
 ```js
             //配置变量，可根据自己需求修改    
-            var imgobj1 = {
+            var imgobj = {
                 "autoChange": //自动轮换
                 {
                     "isAuto": true, //是否开启自动轮换，true开启，false关闭
@@ -65,7 +65,7 @@
                 ]
             }
 ```
-4. 调用函数
+#### 4. 调用函数
 ```js
-imgChange("imgChangeIdLeft", imgobj1); //调用轮换函数，传参整体大容器id与配置信息
+imgChange("imgChange", imgobj); //调用轮换函数，传参整体大容器id与配置信息
 ```
